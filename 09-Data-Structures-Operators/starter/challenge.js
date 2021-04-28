@@ -97,3 +97,48 @@ scoredPlayers.forEach(player => {
 });
 console.log(scorers);
 //모범답안: forEach 대신 for (const player of game.scored)로도 가능하다.
+
+// #3
+const gameEvents = new Map([
+  [17, '⚽ GOAL'],
+  [36, '🔁 Substitution'],
+  [47, '⚽ GOAL'],
+  [61, '🔁 Substitution'],
+  [64, '🔶 Yellow card'],
+  [69, '🔴 Red card'],
+  [70, '🔁 Substitution'],
+  [72, '🔁 Substitution'],
+  [76, '⚽ GOAL'],
+  [80, '⚽ GOAL'],
+  [92, '🔶 Yellow card'],
+]);
+
+//const events = [...new Set(gameEvents)];
+// different game events를 저장하라고 했으므로 value만을 저장해야 한다
+const events = [...new Set(gameEvents.values())];
+console.log(events);
+
+gameEvents.delete(64);
+console.log(gameEvents);
+
+const average = 90 / gameEvents.size;
+console.log(`An event happend, on average, every ${average} minutes`); // 9
+// Bonus: extra time 제외
+const time = [...gameEvents.keys()].pop();
+console.log(time); // 92
+console.log(
+  `An event happend, on average, every ${time / gameEvents.size} minutes`
+); // 9.2
+
+for (const [minute, event] of gameEvents) {
+  console.log(
+    minute <= 45
+      ? `[FIRST HALF] ${minute}: ${event}`
+      : `[SECOND HALF] ${minute}: ${event}`
+  );
+}
+// 모범답안
+for (const [minute, event] of gameEvents) {
+  const half = minute <= 45 ? 'FIRST' : 'SECOND';
+  console.log(`[${half} HALF] ${minute}: ${event}`);
+}
