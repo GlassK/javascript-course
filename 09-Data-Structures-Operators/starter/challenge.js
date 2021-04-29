@@ -142,3 +142,42 @@ for (const [minute, event] of gameEvents) {
   const half = minute <= 45 ? 'FIRST' : 'SECOND';
   console.log(`[${half} HALF] ${minute}: ${event}`);
 }
+
+// #4
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+const underscoreToCamel = function (name) {
+  const [left, right] = name.toLowerCase().trim().split('_');
+  const camelCase = left + right.replace(right[0], right[0].toUpperCase());
+  return camelCase;
+};
+
+const button = document.querySelector('button');
+
+button.addEventListener('click', function () {
+  // 버튼 클릭 후 text를 가져와야 한다
+  const text = document.querySelector('textarea').value;
+  const names = text.split('\n');
+  let order = 1;
+  for (const name of names) {
+    console.log(underscoreToCamel(name).padEnd(20, ' '), '✅'.repeat(order));
+    order += 1;
+  }
+});
+
+// 모범답안: row.entries()를 이용하여 index로 emoji를 반복 출력함
+document.querySelector('button').addEventListener('click', function () {
+  const text = document.querySelector('textarea').value;
+  const rows = text.split('\n');
+
+  for (const [i, row] of rows.entries()) {
+    const [first, second] = row.toLowerCase().trim().split('_');
+
+    const output = `${first}${second.replace(
+      second[0],
+      second[0].toUpperCase()
+    )}`;
+    console.log(`${output.padEnd(20)}${'✅'.repeat(i + 1)}`);
+  }
+});
