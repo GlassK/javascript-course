@@ -1,7 +1,5 @@
 'use strict';
-
 // #1
-
 const poll = {
   question: 'What is your favourite programming language?',
   options: ['0: JavaScript', '1: Python', '2: Rust', '3: C++'],
@@ -22,6 +20,10 @@ const poll = {
     if (!isNaN(input) && validNum.includes(input)) {
       this.answers[input] += 1;
     }
+    // 모범답안 1) typeof로 숫자인지 확인 2) if문 대신 &&로 조건 검사 + 실행
+    // typeof answer === 'number' &&
+    //   answer < this.answers.length &&
+    //   this.answers[answer]++;
 
     this.displayResults();
     this.displayResults('string');
@@ -45,7 +47,17 @@ const textCases = [
 ];
 
 for (const textCase of textCases) {
-  // 헷갈렸던 부분: call method 이용하기
+  // 헷갈렸던 부분: call method 이용하기 (새로운 this keyword가 필요, 직접 answer 프로퍼티를 설정함)
   poll.displayResults.call({ answers: textCase });
   poll.displayResults.call({ answers: textCase }, 'string');
 }
+
+// #2
+(function () {
+  const header = document.querySelector('h1');
+  header.style.color = 'red';
+
+  document.querySelector('body').addEventListener('click', function () {
+    header.style.color = 'blue';
+  });
+})();
